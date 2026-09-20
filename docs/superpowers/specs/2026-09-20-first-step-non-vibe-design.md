@@ -20,7 +20,7 @@ The first release exposes one CLI:
 first-step-non-vibe input.png --output cleaned.png --mask detected-mask.png
 ```
 
-Supported inputs are PNG, JPEG, and WebP images readable by OpenCV. The cleaned image is required. The optional mask shows exactly which pixels were changed, making false detections reviewable.
+Supported inputs are PNG, JPEG, and WebP images readable by OpenCV. The cleaned image is required. The optional mask shows the complete area inpainting is allowed to change, making false detections reviewable.
 
 Useful controls remain deliberately small:
 
@@ -37,7 +37,7 @@ The pipeline has four independent stages:
 
 1. Build a colour-distance map by comparing each pixel with a horizontally blurred local background. This makes detection colour-independent.
 2. Apply vertical morphology to connect anti-aliased sections of the same accent line.
-3. Filter connected components by narrow width, minimum height, strong vertical aspect ratio, fill density, and relative colour consistency. Horizontal rules and ordinary text must not qualify.
+3. Filter connected components by narrow width, minimum height, strong vertical aspect ratio, fill density, vertical colour consistency, and evidence that the component separates two different nearby surfaces. Horizontal rules, ordinary text, and textured strips must not qualify.
 4. Expand the accepted mask slightly to include anti-aliased edges, then reconstruct the marked pixels using OpenCV inpainting.
 
 Detection and removal are separate public functions. Callers can inspect the mask without altering the source image, and a future GUI can reuse the engine without invoking the CLI.

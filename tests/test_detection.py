@@ -10,6 +10,7 @@ from first_step_non_vibe import DetectionConfig, detect_vertical_accents
 def make_card_with_bar(color: tuple[int, int, int]) -> np.ndarray:
     image = np.full((180, 320, 3), 242, dtype=np.uint8)
     cv2.rectangle(image, (30, 25), (290, 155), (250, 250, 250), -1)
+    cv2.rectangle(image, (57, 58), (270, 132), (238, 242, 246), -1)
     cv2.rectangle(image, (52, 58), (56, 132), color, -1)
     return image
 
@@ -90,6 +91,7 @@ def test_ignores_thin_card_frame() -> None:
 def test_detects_rounded_edge_accent_with_sparse_bounding_box() -> None:
     image = np.full((200, 340, 3), 242, dtype=np.uint8)
     cv2.rectangle(image, (35, 25), (305, 175), (250, 250, 250), -1)
+    cv2.rectangle(image, (57, 52), (285, 148), (238, 242, 246), -1)
     points = np.array(
         [[68, 52], [60, 52], [53, 59], [53, 141], [60, 148], [68, 148]],
         dtype=np.int32,
@@ -102,3 +104,24 @@ def test_detects_rounded_edge_accent_with_sparse_bounding_box() -> None:
     )
 
     assert np.count_nonzero(mask[55:145, 50:72]) > 350
+
+
+def test_ignores_tall_typographic_stems() -> None:
+    image = np.full((220, 620, 3), 246, dtype=np.uint8)
+    cv2.rectangle(image, (30, 45), (35, 135), (30, 30, 30), -1)
+
+    mask = detect_vertical_accents(image)
+
+    assert np.count_nonzero(mask) == 0
+
+
+def test_ignores_low_contrast_vertical_texture() -> None:
+    image = np.full((220, 360, 3), 250, dtype=np.uint8)
+    cv2.rectangle(image, (95, 35), (320, 185), (225, 225, 225), -1)
+    for index, y in enumerate(range(35, 185, 10)):
+        shade = 70 if index % 2 == 0 else 80
+        cv2.rectangle(image, (90, y), (94, y + 9), (shade, shade, shade), -1)
+
+    mask = detect_vertical_accents(image)
+
+    assert np.count_nonzero(mask) == 0

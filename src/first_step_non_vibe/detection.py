@@ -57,6 +57,32 @@ def detect_vertical_accents(
         component_pixels = work[labels == label]
         if float(np.mean(np.std(component_pixels, axis=0))) > 28.0:
             continue
+        central_top = y + max(1, height // 10)
+        central_bottom = y + height - max(1, height // 10)
+        row_colors = []
+        for row in range(central_top, central_bottom):
+            row_pixels = work[row][labels[row] == label]
+            if row_pixels.size:
+                row_colors.append(np.median(row_pixels, axis=0))
+        if row_colors:
+            colors = np.asarray(row_colors)
+            spatial_range = np.linalg.norm(
+                np.max(colors, axis=0) - np.min(colors, axis=0)
+            )
+            if float(spatial_range) > 12.0:
+                continue
+
+        sample_width = max(4, min(cfg.max_width, 12))
+        left_start = max(0, x - sample_width - 2)
+        left_end = max(0, x - 2)
+        right_start = min(image.shape[1], x + width + 2)
+        right_end = min(image.shape[1], x + width + sample_width + 2)
+        if left_end <= left_start or right_end <= right_start:
+            continue
+        left_color = np.median(work[y : y + height, left_start:left_end], axis=(0, 1))
+        right_color = np.median(work[y : y + height, right_start:right_end], axis=(0, 1))
+        if float(np.linalg.norm(left_color - right_color)) < 6.0:
+            continue
         median_color = np.median(component_pixels, axis=0)
         candidates.append((label, x, y, width, height, median_color))
 

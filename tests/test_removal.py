@@ -20,4 +20,5 @@ def test_removal_reconstructs_card_and_preserves_remote_pixels() -> None:
     assert float(np.mean(np.abs(target - expected))) < 12.0
     assert np.array_equal(cleaned[30:45, 250:270], remote_before)
     assert np.count_nonzero(mask) > 0
-
+    changed = np.any(cleaned != source, axis=2)
+    assert not np.any(changed & (mask == 0))

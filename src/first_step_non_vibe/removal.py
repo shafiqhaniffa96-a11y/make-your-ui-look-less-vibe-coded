@@ -24,5 +24,4 @@ def remove_vertical_accents(
         iterations=1,
     )
     cleaned = cv2.inpaint(image, expanded, 3, cv2.INPAINT_TELEA)
-    return cleaned, mask
-
+    return cleaned, expanded

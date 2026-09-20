@@ -30,7 +30,7 @@ first-step-non-vibe screenshot.png \
   --mask detected-mask.png
 ```
 
-The mask is optional, but it is useful for reviewing exactly what changed.
+The mask is optional, but it shows the complete area that inpainting is allowed to change.
 
 Tune detection when needed:
 
@@ -66,7 +66,7 @@ cv2.imwrite("mask.png", mask)
 
 1. Compare each pixel with neighbours beyond the configured maximum bar width.
 2. Join anti-aliased vertical sections.
-3. Keep only narrow, tall, dense, colour-consistent components.
+3. Keep only narrow, tall, dense, colour-consistent components that separate two different nearby surfaces.
 4. Expand the accepted mask by one pixel and reconstruct it with OpenCV Telea inpainting.
 
 The geometry and local contrast drive detection, so orange, blue, grey, and other colours use the same pipeline.
@@ -75,6 +75,7 @@ The geometry and local contrast drive detection, so orange, blue, grey, and othe
 
 - Designed for raster screenshots, not HTML or CSS source files.
 - Complex textures behind a removed bar may not reconstruct perfectly.
+- An isolated line on one uniform surface is ignored because it cannot be safely distinguished from a tall text stroke.
 - Review the diagnostic mask before processing important assets in bulk.
 - It intentionally does not remove arbitrary watermarks or text.
 
