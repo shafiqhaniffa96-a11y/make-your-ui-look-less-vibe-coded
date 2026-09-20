@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "first-step-non-vibe"
+version = "0.1.0"
+description = "Remove narrow solid vertical accent bars from screenshots, regardless of colour."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Ahnaf Thaqeef" }]
+dependencies = [
+  "numpy>=2.0",
+  "opencv-python-headless>=4.10",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0", "build>=1.2"]
+
+[project.scripts]
+first-step-non-vibe = "first_step_non_vibe.cli:main"
+
+[project.urls]
+Repository = "https://github.com/shafiqhaniffa96-a11y/first-step-to-look-non-vibe-coded"
+Issues = "https://github.com/shafiqhaniffa96-a11y/first-step-to-look-non-vibe-coded/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/first_step_non_vibe"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
