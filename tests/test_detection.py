@@ -85,3 +85,20 @@ def test_ignores_thin_card_frame() -> None:
     )
 
     assert np.count_nonzero(mask) == 0
+
+
+def test_detects_rounded_edge_accent_with_sparse_bounding_box() -> None:
+    image = np.full((200, 340, 3), 242, dtype=np.uint8)
+    cv2.rectangle(image, (35, 25), (305, 175), (250, 250, 250), -1)
+    points = np.array(
+        [[68, 52], [60, 52], [53, 59], [53, 141], [60, 148], [68, 148]],
+        dtype=np.int32,
+    )
+    cv2.polylines(image, [points], False, (43, 108, 236), 5, cv2.LINE_8)
+
+    mask = detect_vertical_accents(
+        image,
+        DetectionConfig(min_height=60, max_width=24, sensitivity=20),
+    )
+
+    assert np.count_nonzero(mask[55:145, 50:72]) > 350

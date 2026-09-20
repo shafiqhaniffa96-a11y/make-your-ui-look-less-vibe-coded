@@ -36,7 +36,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--output", "-o", required=True, type=Path)
     parser.add_argument("--mask", type=Path, help="Optional diagnostic mask")
     parser.add_argument("--min-height", type=positive_int, default=40)
-    parser.add_argument("--max-width", type=positive_int, default=14)
+    parser.add_argument("--max-width", type=positive_int, default=20)
     parser.add_argument("--sensitivity", type=positive_float, default=24.0)
     return parser
 

@@ -37,7 +37,7 @@ Tune detection when needed:
 ```bash
 first-step-non-vibe screenshot.png -o cleaned.png \
   --min-height 40 \
-  --max-width 14 \
+  --max-width 20 \
   --sensitivity 24
 ```
 
@@ -54,7 +54,7 @@ from first_step_non_vibe import DetectionConfig, remove_vertical_accents
 image = cv2.imread("screenshot.png")
 cleaned, mask = remove_vertical_accents(
     image,
-    DetectionConfig(min_height=40, max_width=14, sensitivity=24),
+    DetectionConfig(min_height=40, max_width=20, sensitivity=24),
 )
 cv2.imwrite("cleaned.png", cleaned)
 cv2.imwrite("mask.png", mask)
@@ -91,4 +91,3 @@ Issues and focused pull requests are welcome. Include a small synthetic reproduc
 ## License
 
 [MIT](LICENSE) © 2026 Ahnaf Thaqeef
-

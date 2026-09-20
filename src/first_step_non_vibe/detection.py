@@ -13,7 +13,7 @@ class DetectionConfig:
     """Geometry and contrast thresholds for accent detection."""
 
     min_height: int = 40
-    max_width: int = 14
+    max_width: int = 20
     sensitivity: float = 24.0
 
 
@@ -52,7 +52,7 @@ def detect_vertical_accents(
             continue
         if height / max(width, 1) < 4.0:
             continue
-        if area / (width * height) < 0.55:
+        if area / (width * height) < 0.30:
             continue
         component_pixels = work[labels == label]
         if float(np.mean(np.std(component_pixels, axis=0))) > 28.0:
