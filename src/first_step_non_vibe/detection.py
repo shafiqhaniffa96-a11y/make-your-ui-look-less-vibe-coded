@@ -53,6 +53,9 @@ def detect_vertical_accents(
             continue
         if area / (width * height) < 0.55:
             continue
+        component_pixels = work[labels == label]
+        if float(np.mean(np.std(component_pixels, axis=0))) > 28.0:
+            continue
         result[labels == label] = 255
 
     return result
