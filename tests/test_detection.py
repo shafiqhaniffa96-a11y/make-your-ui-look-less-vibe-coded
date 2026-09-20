@@ -73,3 +73,15 @@ def test_ignores_textured_vertical_region() -> None:
     )
 
     assert np.count_nonzero(mask) == 0
+
+
+def test_ignores_thin_card_frame() -> None:
+    image = np.full((180, 320, 3), 242, dtype=np.uint8)
+    cv2.rectangle(image, (30, 25), (290, 155), (210, 210, 210), 2)
+
+    mask = detect_vertical_accents(
+        image,
+        DetectionConfig(min_height=50, max_width=10, sensitivity=20),
+    )
+
+    assert np.count_nonzero(mask) == 0

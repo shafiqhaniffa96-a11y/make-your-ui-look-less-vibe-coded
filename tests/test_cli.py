@@ -77,3 +77,23 @@ def test_cli_rejects_non_positive_threshold(tmp_path: Path) -> None:
 
     assert result.returncode == 2
     assert "positive integer" in result.stderr
+
+
+def test_example_generator_creates_matching_images(tmp_path: Path) -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(ROOT / "scripts" / "generate_examples.py"),
+            "--output-dir",
+            str(tmp_path),
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    images = [cv2.imread(str(tmp_path / name)) for name in ("before.png", "mask.png", "after.png")]
+    assert all(image is not None for image in images)
+    assert len({image.shape[:2] for image in images if image is not None}) == 1

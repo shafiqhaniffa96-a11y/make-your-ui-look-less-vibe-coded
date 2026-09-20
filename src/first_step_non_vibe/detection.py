@@ -45,6 +45,7 @@ def detect_vertical_accents(
 
     result = np.zeros(image.shape[:2], dtype=np.uint8)
     count, labels, stats, _ = cv2.connectedComponentsWithStats(raw, connectivity=8)
+    candidates: list[tuple[int, int, int, int, int, np.ndarray]] = []
     for label in range(1, count):
         x, y, width, height, area = stats[label]
         if height < cfg.min_height or width > cfg.max_width:
@@ -56,6 +57,26 @@ def detect_vertical_accents(
         component_pixels = work[labels == label]
         if float(np.mean(np.std(component_pixels, axis=0))) > 28.0:
             continue
-        result[labels == label] = 255
+        median_color = np.median(component_pixels, axis=0)
+        candidates.append((label, x, y, width, height, median_color))
+
+    paired_frames: set[int] = set()
+    for index, first in enumerate(candidates):
+        for second in candidates[index + 1 :]:
+            _, first_x, first_y, first_width, first_height, first_color = first
+            _, second_x, second_y, second_width, second_height, second_color = second
+            same_span = (
+                abs(first_y - second_y) <= 3
+                and abs(first_height - second_height) <= 3
+            )
+            separated = abs(first_x - second_x) > 2 * cfg.max_width
+            same_color = float(np.linalg.norm(first_color - second_color)) <= 10.0
+            thin_pair = first_width <= 3 and second_width <= 3
+            if same_span and separated and same_color and thin_pair:
+                paired_frames.update((first[0], second[0]))
+
+    for label, *_ in candidates:
+        if label not in paired_frames:
+            result[labels == label] = 255
 
     return result
