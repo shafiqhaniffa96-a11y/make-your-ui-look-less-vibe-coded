@@ -1,20 +1,25 @@
 {
   "name": "make-your-ui-look-less-vibe-coded",
-  "version": "0.2.0",
-  "description": "A conservative PostCSS cleaner for decorative vertical accent bars.",
+  "version": "0.3.0",
+  "description": "Build-time CSS accent cleanup and theme-aware emoji-to-SVG transforms.",
   "type": "module",
-  "exports": "./js/index.js",
+  "exports": {
+    ".": "./js/index.js",
+    "./emoji": "./js/emoji.js"
+  },
   "bin": {
-    "less-vibe-css": "./js/cli.js"
+    "less-vibe-css": "./js/cli.js",
+    "less-vibe-icons": "./js/emoji-cli.js"
   },
   "files": [
     "js/",
     "docs/legacy-screenshot-tool.md",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "docs/emoji-icons.md"
   ],
   "engines": {
-    "node": ">=20"
+    "node": ">=20.19.0"
   },
   "scripts": {
     "test": "node --test test-js/*.test.js"
@@ -35,6 +40,8 @@
   },
   "homepage": "https://github.com/shafiqhaniffa96-a11y/make-your-ui-look-less-vibe-coded#readme",
   "dependencies": {
+    "@babel/parser": "^7.29.9",
+    "parse5": "^8.0.1",
     "postcss": "^8.5.6"
   }
 }

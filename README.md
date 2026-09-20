@@ -1,12 +1,36 @@
 # Make Your UI Look Less Vibe-Coded
 
-Remove decorative vertical accent bars from CSS during your production build.
+Remove decorative vertical accent bars and replace UI emoji with theme-aware SVG icons during your production build.
 
-The main workflow is a **PostCSS plugin and Node CLI**. It transforms generated CSS before deployment, with no screenshots or browser runtime required. Detection is based on CSS structure rather than a specific accent colour.
+The CSS workflow is a **PostCSS plugin and Node CLI**. It transforms generated CSS before deployment, with no screenshots or browser runtime required. Detection is based on CSS structure rather than a specific accent colour. A separate **HTML/JSX/TSX transform and CLI** replaces supported UI emoji with inline vector icons.
+
+## Replace emoji with vector icons
+
+```sh
+node js/emoji-cli.js input.html -o output.html --report icons-report.json
+node js/emoji-cli.js src/App.tsx --dry-run
+node js/emoji-cli.js src/App.tsx --check
+```
+
+For JavaScript build scripts:
+
+```js
+import { transformEmoji } from 'make-your-ui-look-less-vibe-coded/emoji';
+
+const { code, report } = transformEmoji(source, {
+  format: 'tsx', // html, jsx or tsx
+  strokeWidth: 1.5,
+  className: 'project-icon',
+});
+```
+
+Supported emoji in rendered text become accessible SVGs that inherit text colour and font size. Configure the stroke weight, CSS class and custom SVG path mappings to match your design system. Unknown emoji remain unchanged and are reported. The transform does not guess an arbitrary project's icon library or the meaning of ambiguous symbols.
+
+Run it on HTML output or on JSX/TSX **before compilation**, and make your build consume the returned code. It does not modify projects automatically just because it is installed. See [emoji icon configuration, build example and limits](docs/emoji-icons.md).
 
 ## Install from source
 
-Requires Node.js 20 or newer.
+Requires Node.js 20.19 or newer.
 
 ```sh
 git clone https://github.com/shafiqhaniffa96-a11y/make-your-ui-look-less-vibe-coded.git
