@@ -1,0 +1,5 @@
+.card { padding: 24px; background: #eef6fc; border-left: 0; }
+.panel::before { content: none; position: absolute; width: 4px; height: 100%; background: purple; }
+.input { border: 1px solid gray; }
+.button:focus-visible { border-left: 4px solid blue; }
+.brand { /* vibe-keep */ border-left: 4px solid green; }

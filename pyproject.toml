@@ -22,8 +22,8 @@ test = ["pytest>=8.0", "build>=1.2"]
 first-step-non-vibe = "first_step_non_vibe.cli:main"
 
 [project.urls]
-Repository = "https://github.com/shafiqhaniffa96-a11y/first-step-to-look-non-vibe-coded"
-Issues = "https://github.com/shafiqhaniffa96-a11y/first-step-to-look-non-vibe-coded/issues"
+Repository = "https://github.com/shafiqhaniffa96-a11y/make-your-ui-look-less-vibe-coded"
+Issues = "https://github.com/shafiqhaniffa96-a11y/make-your-ui-look-less-vibe-coded/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/first_step_non_vibe"]

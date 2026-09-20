@@ -1,0 +1,40 @@
+{
+  "name": "make-your-ui-look-less-vibe-coded",
+  "version": "0.2.0",
+  "description": "A conservative PostCSS cleaner for decorative vertical accent bars.",
+  "type": "module",
+  "exports": "./js/index.js",
+  "bin": {
+    "less-vibe-css": "./js/cli.js"
+  },
+  "files": [
+    "js/",
+    "docs/legacy-screenshot-tool.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test test-js/*.test.js"
+  },
+  "keywords": [
+    "postcss",
+    "css",
+    "ui",
+    "lint"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shafiqhaniffa96-a11y/make-your-ui-look-less-vibe-coded.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shafiqhaniffa96-a11y/make-your-ui-look-less-vibe-coded/issues"
+  },
+  "homepage": "https://github.com/shafiqhaniffa96-a11y/make-your-ui-look-less-vibe-coded#readme",
+  "dependencies": {
+    "postcss": "^8.5.6"
+  }
+}

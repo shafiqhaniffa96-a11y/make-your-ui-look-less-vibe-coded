@@ -6,3 +6,6 @@ dist/
 build/
 *.egg-info/
 validation/
+
+node_modules/
+*.tgz
