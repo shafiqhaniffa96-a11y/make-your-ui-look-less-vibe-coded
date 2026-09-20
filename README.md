@@ -1,4 +1,4 @@
-# The First Step to Making Your UI Look Less Vibe-Coded
+# Make Your UI Look Less Vibe-Coded
 
 Remove narrow, solid vertical accent bars from screenshots—without hard-coding their colour.
 
