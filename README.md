@@ -15,7 +15,7 @@ The example is generated and unbranded. No private or customer screenshot is inc
 ## Install
 
 ```bash
-git clone https://github.com/ahnafthaqeef/first-step-to-look-non-vibe-coded.git
+git clone https://github.com/shafiqhaniffa96-a11y/first-step-to-look-non-vibe-coded.git
 cd first-step-to-look-non-vibe-coded
 python -m pip install -e .
 ```
